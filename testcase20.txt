@@ -1,0 +1,4 @@
+TELL
+hungry => feed; feed => happy; thirsty => give_water; hungry; collar => pet; has_food => can_feed;
+ASK
+happy

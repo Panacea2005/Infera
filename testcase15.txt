@@ -1,0 +1,7 @@
+TELL
+study => pass;
+practice => pass;
+study;
+practice;
+ASK
+pass

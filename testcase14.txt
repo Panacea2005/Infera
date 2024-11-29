@@ -1,0 +1,4 @@
+TELL
+(lights_on <=> motion_detected) & time_night; energy_save || ~lights_on; presence_mode & ~sleeping => motion_detected; time_night; presence_mode; sleeping;
+ASK
+energy_save

@@ -1,0 +1,4 @@
+TELL
+sick => fever; fever => tired; headache & nausea => sick; nausea; tired => rest;
+ASK
+rest

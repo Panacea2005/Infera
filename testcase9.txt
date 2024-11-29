@@ -1,0 +1,4 @@
+TELL
+ingredients & recipe => can_cook; can_cook & skill => good_dish; good_dish => satisfaction; ingredients; recipe; equipment => skill; fresh_ingredients => quality; fresh_ingredients;
+ASK
+satisfaction

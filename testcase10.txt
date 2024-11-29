@@ -1,0 +1,4 @@
+TELL
+(alarm_on <=> motion_detected) || door_open; ~alarm_on & camera_on; sensor_active => motion_detected; guard_present || camera_on; guard_present;
+ASK
+door_open

@@ -1,0 +1,4 @@
+TELL
+(power_on <=> battery_full) & ~short_circuit; power_on || backup_power; led_light => power_on; ~battery_full; backup_power;
+ASK
+led_light

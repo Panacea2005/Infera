@@ -1,0 +1,4 @@
+TELL
+(clouds <=> humidity_high) & wind_strong; precipitation || ~clouds; temperature_low & humidity_high => frost; wind_strong; ~precipitation;
+ASK
+frost

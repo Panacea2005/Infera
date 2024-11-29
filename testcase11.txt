@@ -1,0 +1,4 @@
+TELL
+power_supply => basic_power; basic_power => bios_start; bios_start & ram_check => boot_sequence; boot_sequence => os_load; power_supply; ram_check; hard_drive => storage_ready; storage_ready & os_load => system_ready;
+ASK
+system_ready

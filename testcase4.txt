@@ -1,0 +1,4 @@
+TELL
+(x <=> y) || z; ~x & ~y; w => z; v || w; ~v;
+ASK
+z

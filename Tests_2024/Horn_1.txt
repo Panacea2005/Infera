@@ -1,0 +1,4 @@
+TELL
+rainy => wet; wet => umbrella; cold & wet => stay_inside; windy & rainy => storm; cold; windy;
+ASK
+stay_inside

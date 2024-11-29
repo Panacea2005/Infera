@@ -1,0 +1,4 @@
+TELL
+sunny => warm; warm => beach; sunny;
+ASK
+beach

@@ -1,0 +1,4 @@
+TELL
+(vehicle_ready <=> fuel_full) || maintenance_done; ~vehicle_ready & ~maintenance_done; driver_available => can_start; emergency || driver_available;
+ASK
+can_start

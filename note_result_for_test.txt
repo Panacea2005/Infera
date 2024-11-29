@@ -1,0 +1,267 @@
+# Test Case 1 (Horn KB)
+TELL
+p1 => p2; p2 => p3; p3 => p4; p5 & p6 => p1; p2 & p3 => p6; p5;
+ASK
+p4
+RESULT: NO
+# Reasoning:
+# 1. Only p5 is given as fact
+# 2. Cannot derive p1 (requires both p5 AND p6)
+# 3. Cannot derive p6 (requires both p2 AND p3)
+# 4. Therefore cannot establish chain to p4
+
+# Test Case 2 (Non-Horn KB)
+TELL
+(a <=> b) & ~c; b || d; ~d => e; a => c; b;
+ASK
+e
+RESULT: NO
+# Reasoning:
+# 1. Given b
+# 2. a <=> b means a is true
+# 3. ~c is true (given)
+# 4. This contradicts a => c
+# 5. b || d is satisfied by b being true
+# 6. Cannot determine if d is false
+# 7. Therefore cannot conclude e from ~d => e
+
+# Test Case 3 (Horn KB)
+TELL
+sick => fever; fever => tired; headache & nausea => sick; nausea; tired => rest;
+ASK
+rest
+RESULT: NO
+# Reasoning:
+# 1. Only nausea is given as fact
+# 2. Cannot derive sick (requires both headache AND nausea)
+# 3. Cannot derive fever (requires sick)
+# 4. Cannot derive tired (requires fever)
+# 5. Therefore cannot conclude rest
+
+# Test Case 4 (Non-Horn KB)
+TELL
+(x <=> y) || z; ~x & ~y; w => z; v || w; ~v;
+ASK
+z
+RESULT: NO
+# Reasoning:
+# 1. ~x & ~y is true (given)
+# 2. In (x <=> y) || z, first part is satisfied (both x and y are false)
+# 3. ~v is true (given)
+# 4. Cannot determine w from v || w
+# 5. Cannot derive z from w => z
+# 6. Therefore z cannot be proven
+
+# Test Case 5 (Horn KB)
+TELL
+rainy => wet; wet => umbrella; cold & wet => stay_inside; windy & rainy => storm; cold; windy;
+ASK
+stay_inside
+RESULT: NO
+# Reasoning:
+# 1. Only cold and windy are given as facts
+# 2. Cannot derive rainy
+# 3. Without rainy, cannot derive wet
+# 4. Without wet, cannot derive stay_inside (even though cold is true)
+
+# Test Case 6 (Non-Horn KB)
+TELL
+(p || q) & ~r; s <=> (p & q); t || ~s; ~p; t;
+ASK
+q
+RESULT: NO
+# Reasoning:
+# 1. Given ~p and t
+# 2. From (p || q) & ~r, need q to be true since p is false
+# 3. s <=> (p & q) means s is false (since p is false)
+# 4. t || ~s is satisfied by t being true
+# 5. No way to definitively prove q is true
+
+
+
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+# Test Case 7 (Horn KB - Student Graduation)
+TELL
+passing_grades => eligible; eligible & completed_credits => can_graduate; thesis_done => extra_credit; completed_credits & extra_credit => honors; passing_grades; completed_credits; thesis_done;
+ASK
+honors
+RESULT: YES
+# Reasoning:
+# 1. passing_grades => eligible is true
+# 2. eligible & completed_credits => can_graduate is true
+# 3. thesis_done => extra_credit is true
+# 4. completed_credits & extra_credit => honors is true (all conditions met)
+
+# Test Case 8 (Non-Horn KB - Circuit Logic)
+TELL
+(power_on <=> battery_full) & ~short_circuit; power_on || backup_power; led_light => power_on; ~battery_full; backup_power;
+ASK
+led_light
+RESULT: NO
+# Reasoning:
+# 1. ~battery_full means power_on is false (due to biconditional)
+# 2. backup_power satisfies power_on || backup_power
+# 3. Cannot conclude led_light since power_on is false
+
+# Test Case 9 (Horn KB - Recipe Success)
+TELL
+ingredients & recipe => can_cook; can_cook & skill => good_dish; good_dish => satisfaction; ingredients; recipe; equipment => skill; fresh_ingredients => quality; fresh_ingredients;
+ASK
+satisfaction
+RESULT: NO
+# Reasoning:
+# 1. Have ingredients and recipe (can_cook is true)
+# 2. Missing equipment, so can't prove skill
+# 3. Cannot establish good_dish without skill
+# 4. Therefore satisfaction cannot be proven
+
+# Test Case 10 (Non-Horn KB - Security System)
+TELL
+(alarm_on <=> motion_detected) || door_open; ~alarm_on & camera_on; sensor_active => motion_detected; guard_present || camera_on; guard_present;
+ASK
+door_open
+RESULT: YES
+# Reasoning:
+# 1. ~alarm_on means motion_detected is false
+# 2. In (alarm_on <=> motion_detected) || door_open
+# 3. Since first part is false, door_open must be true
+
+# Test Case 11 (Horn KB - Computer Boot)
+TELL
+power_supply => basic_power; basic_power => bios_start; bios_start & ram_check => boot_sequence; boot_sequence => os_load; power_supply; ram_check; hard_drive => storage_ready; storage_ready & os_load => system_ready;
+ASK
+system_ready
+RESULT: NO
+# Reasoning:
+# 1. Can establish boot_sequence through power_supply => basic_power => bios_start
+# 2. Missing hard_drive fact to establish storage_ready
+# 3. Cannot prove system_ready without storage_ready
+
+# Test Case 12 (Non-Horn KB - Weather Prediction)
+TELL
+(clouds <=> humidity_high) & wind_strong; precipitation || ~clouds; temperature_low & humidity_high => frost; wind_strong; ~precipitation;
+ASK
+frost
+RESULT: NO
+# Reasoning:
+# 1. wind_strong is given
+# 2. ~precipitation means clouds must be false (from precipitation || ~clouds)
+# 3. If clouds is false, humidity_high is false (from biconditional)
+# 4. Cannot prove frost without humidity_high
+
+# Test Case 13 (Horn KB - Disease Diagnosis)
+TELL
+fever & cough => flu; flu => rest_needed; rest_needed & medication => recovery; fever; cough; medication; recovery => health_restored; vitamin_c => immune_boost; immune_boost & recovery => quick_recovery;
+ASK
+quick_recovery
+RESULT: YES
+# Reasoning:
+# 1. fever & cough => flu is true
+# 2. flu => rest_needed is true
+# 3. rest_needed & medication => recovery is true
+# 4. vitamin_c fact is missing but not needed for recovery
+# 5. recovery is proven, which is all we need for the query
+
+
+
+
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+# Test Case 14 (Non-Horn KB - Smart Home System)
+TELL
+(lights_on <=> motion_detected) & time_night; energy_save || ~lights_on; presence_mode & ~sleeping => motion_detected; time_night; presence_mode; sleeping;
+ASK
+energy_save
+RESULT: YES
+# Reasoning:
+# 1. presence_mode & ~sleeping => motion_detected is false (sleeping is true)
+# 2. motion_detected is false, so lights_on is false (from biconditional)
+# 3. energy_save || ~lights_on requires energy_save to be true since ~lights_on is true
+
+# Test Case 15 (Horn KB - Software Deployment)
+TELL
+code_tested => ready_deploy; ready_deploy & server_up => deployment; deployment & db_migrated => app_running; server_up; code_tested; db_migrated; app_running => success; monitoring => health_check;
+ASK
+success
+RESULT: YES
+# Reasoning:
+# 1. code_tested => ready_deploy is true
+# 2. ready_deploy & server_up => deployment is true
+# 3. deployment & db_migrated => app_running is true
+# 4. app_running => success is true
+
+# Test Case 16 (Non-Horn KB - Transportation Logic)
+TELL
+(vehicle_ready <=> fuel_full) || maintenance_done; ~vehicle_ready & ~maintenance_done; driver_available => can_start; emergency || driver_available;
+ASK
+can_start
+RESULT: NO
+# Reasoning:
+# 1. ~vehicle_ready & ~maintenance_done means both conditions are false
+# 2. Cannot determine driver_available from emergency || driver_available
+# 3. Without confirming driver_available, can't prove can_start
+
+# Test Case 17 (Horn KB - Plant Growth)
+TELL
+water & sunlight => growth; growth & nutrients => healthy_plant; healthy_plant => blooming; pests => ~healthy_plant; water; sunlight; nutrients; pests;
+ASK
+blooming
+RESULT: NO
+# Reasoning:
+# 1. water & sunlight => growth is true
+# 2. growth & nutrients would lead to healthy_plant
+# 3. But pests => ~healthy_plant contradicts this
+# 4. Cannot establish blooming without healthy_plant
+
+# Test Case 18 (Non-Horn KB - Network Security)
+TELL
+(firewall_active <=> security_protocol) & system_updated; ~malware || antivirus_running; firewall_active & ~malware => secure_system; system_updated; antivirus_running;
+ASK
+secure_system
+RESULT: YES
+# Reasoning:
+# 1. system_updated is true
+# 2. firewall_active <=> security_protocol means both are true
+# 3. antivirus_running means ~malware is true
+# 4. firewall_active & ~malware => secure_system is true
+
+# Test Case 19 (Horn KB - Restaurant Service)
+TELL
+ingredients_ready & chef_available => cooking_started; cooking_started & quality_check => food_ready; food_ready & served => customer_served; ingredients_ready; chef_available; quality_check; waiter_available => served;
+ASK
+customer_served
+RESULT: NO
+# Reasoning:
+# 1. ingredients_ready & chef_available => cooking_started is true
+# 2. cooking_started & quality_check => food_ready is true
+# 3. Missing waiter_available fact to establish served
+# 4. Cannot prove customer_served without served being true
+
+
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+# Test Case 20 (Horn KB - Simple Pet Care)
+TELL
+hungry => feed; feed => happy; thirsty => give_water; hungry; collar => pet; has_food => can_feed;
+ASK
+happy
+RESULT: NO
+# Reasoning:
+# 1. We know hungry is true (given fact)
+# 2. We need feed to be true to get happy
+# 3. Although hungry => feed, we need has_food to establish can_feed
+# 4. Missing has_food fact prevents us from concluding feed
+# 5. Therefore, cannot prove happy
+
+# Test Case 21
+TELL
+sunny => warm; warm => beach; sunny;
+ASK
+beach
+RESULT: YES
+# Reasoning:
+# 1. sunny is given as fact
+# 2. sunny => warm is true
+# 3. warm => beach completes the chain

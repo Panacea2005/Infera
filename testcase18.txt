@@ -1,0 +1,4 @@
+TELL
+(firewall_active <=> security_protocol) & system_updated; ~malware || antivirus_running; firewall_active & ~malware => secure_system; system_updated; antivirus_running;
+ASK
+secure_system

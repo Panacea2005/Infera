@@ -1,0 +1,4 @@
+TELL
+fever & cough => flu; flu => rest_needed; rest_needed & medication => recovery; fever; cough; medication; recovery => health_restored; vitamin_c => immune_boost; immune_boost & recovery => quick_recovery;
+ASK
+quick_recovery

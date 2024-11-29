@@ -1,0 +1,4 @@
+TELL
+ingredients_ready & chef_available => cooking_started; cooking_started & quality_check => food_ready; food_ready & served => customer_served; ingredients_ready; chef_available; quality_check; waiter_available => served;
+ASK
+customer_served
