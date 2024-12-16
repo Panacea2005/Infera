@@ -8,7 +8,7 @@
     {
       "src": "iengine-ui/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "iengine-ui/dist" }
+      "config": { "distDir": "iengine-ui/build" }
     }
   ],
   "routes": [
